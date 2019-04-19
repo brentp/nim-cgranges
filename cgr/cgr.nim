@@ -33,18 +33,18 @@ type interval* = object
   stop*:int32
   label*:int32
 
-iterator overlap*(c:CGR, contig: string, start:int32, stop: int32): interval =
+iterator overlap*(c:CGR, contig: string, start:int32|int, stop: int32|int): interval =
   doAssert not c.must_index
-  for i in 0..<cr_overlap(c.c, contig, start, stop, c.b.addr, c.n_b.addr):
+  for i in 0..<cr_overlap(c.c, contig, start.int32, stop.int32, c.b.addr, c.n_b.addr):
     var cp = cast[ptr UncheckedArray[int64]](c.b)[i]
     yield interval(start:c.c.cr_start(cp),
                    stop:c.c.cr_end(cp),
                    label: c.c.cr_label(cp))
 
-proc count*(c:CGR, contig: string, start:int32, stop: int32): int {.inline.} =
+proc count*(c:CGR, contig: string, start:int32|int, stop: int32|int): int {.inline.} =
   ## count number of overlaps in given region.
   doAssert not c.must_index
-  return cr_overlap(c.c, contig, start, stop, c.b.addr, c.n_b.addr).int
+  return cr_overlap(c.c, contig, start.int32, stop.int32, c.b.addr, c.n_b.addr).int
 
 when isMainModule:
 
