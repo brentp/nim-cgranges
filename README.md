@@ -1,4 +1,7 @@
-`nimble install https://github.com/brentp/nim-cgranges
+`nimble install https://github.com/brentp/nim-cgranges`
+
+The code below demonstrates the entirety of the API, but
+docs are also available [here](https://brentp.github.io/nim-cgranges/)
 
 ```Nim
   import cgr
